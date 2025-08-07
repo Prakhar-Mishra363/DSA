@@ -4,9 +4,12 @@ public:
     vector<int> findMissingAndRepeatedValues(vector<vector<int>>& grid) {
         map<int,bool>m;
         int n=grid.size();
-        int a;
+        int a,b;
+        int actualSum,expectedSum=0;
+        actualSum=((n*n)*((n*n)+1))/2;
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
+                expectedSum+=grid[i][j];
                 if(m.find(grid[i][j])!=m.end()){
                     //m.[grid[i][j]]=true;
                     a=grid[i][j];
@@ -15,21 +18,7 @@ public:
                 }
             }
         }
-        int count=1;
-        int b=0;
-        for(auto val:m){
-            if(count==val.first){
-                count++;
-            }else{
-                b=count;
-                break;
-            }
-        }
-        if(b==0){
-            return {a,count};
-        }else{
-            return {a,b};
-        }
-    return {-1,-1};
+        
+    return {a, actualSum-expectedSum+a};
     }
 };
