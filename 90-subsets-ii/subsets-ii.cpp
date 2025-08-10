@@ -11,9 +11,9 @@ void helper(vector<int>& arr,vector<vector<int>>& ans,int i,vector<int>& contain
     int x=i+1;
     while(x<arr.size()&&(arr[x-1]==arr[x])){
         x++;
-        i++;
+        // i++;
     }
-    helper(arr,ans,i+1,container);
+    helper(arr,ans,x,container);
     return;
 
 }
