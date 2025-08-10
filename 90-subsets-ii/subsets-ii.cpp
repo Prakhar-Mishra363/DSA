@@ -1,7 +1,6 @@
 class Solution {
 public:
 void helper(vector<int>& arr,vector<vector<int>>& ans,int i,vector<int>& container){
-    sort(arr.begin(),arr.end());
     if(i==arr.size()){
         ans.push_back(container);
         return;
@@ -21,6 +20,7 @@ void helper(vector<int>& arr,vector<vector<int>>& ans,int i,vector<int>& contain
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
         vector<vector<int>>ans;
         vector<int>cont;
+        sort(nums.begin(),nums.end());
         helper(nums,ans,0,cont);
         return ans;
     }
