@@ -4,12 +4,7 @@ public:
         for(int i=0;i<9;i++){
             if(board[row][i]==ch)return false;
             if(board[i][col]==ch)return false;
-        }
-        int x=(row/3)*3,y=(col/3)*3;
-        for(int i=x;i<(x+3);i++){
-            for(int j=y;j<(y+3);j++){
-                    if(board[i][j]==ch)return false;
-            }
+            if(board[3 * (row / 3)+ i/3][3 * (col / 3)+ i % 3] == ch) return false; 
         }
         return true;
     }
