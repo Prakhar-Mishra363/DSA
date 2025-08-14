@@ -26,7 +26,7 @@ public:
         if(row-2>=0&&col-1>=0){
             if(grid[row-2][col-1]==move)return {row-2,col-1};
         }
-        return{-1.,-1};
+        return{-1,-1};
         
     }
     bool helper(const vector<vector<int>>& grid,int row, int col,int move){
