@@ -2,29 +2,14 @@ class Solution {
 public:
     pair<int,int> isValid(const vector<vector<int>>& grid,int row, int col,int move){
         int n=grid.size()-1;
-        if(row-2>=0&&col+1<=n){
-            if(grid[row-2][col+1]==move)return {row-2,col+1};
-        }
-        if(row-1>=0&&col+2<=n){
-            if(grid[row-1][col+2]==move)return {row-1,col+2};
-        }
-        if(row+1<=n&&col+2<=n){
-            if(grid[row+1][col+2]==move)return {row+1,col+2};
-        }
-        if(row+2<=n&&col+1<=n){
-            if(grid[row+2][col+1]==move)return {row+2,col+1};
-        }
-        if(row+2<=n&&col-1>=0){
-            if(grid[row+2][col-1]==move)return {row+2,col-1};
-        }
-        if(row+1<=n&&col-2>=0){
-            if(grid[row+1][col-2]==move)return {row+1,col-2};
-        }
-        if(row-1>=0&&col-2>=0){
-            if(grid[row-1][col-2]==move)return {row-1,col-2};
-        }
-        if(row-2>=0&&col-1>=0){
-            if(grid[row-2][col-1]==move)return {row-2,col-1};
+        int dx[]={-2,-1,1,2,2,1,-1,-2};
+        int dy[]={1,2,2,1,-1,-2,-2,-1};
+        for(int i=0;i<8;i++){
+            int nx=row+dx[i];
+            int ny=col+dy[i];
+            if(((nx>=0&&nx<=n)&&(ny>=0&&ny<=n))&&grid[nx][ny]==move){
+                return{nx,ny};
+            }
         }
         return{-1,-1};
         
