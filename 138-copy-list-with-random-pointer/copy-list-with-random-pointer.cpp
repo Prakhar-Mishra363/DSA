@@ -39,10 +39,10 @@ public:
       oldTemp=head;
       while(oldTemp){
         if(oldTemp->random){
-            newTemp->random=m[oldTemp->random];
+            m[oldTemp]->random=m[oldTemp->random];
         }
         oldTemp=oldTemp->next;
-        newTemp=newTemp->next;
+        // newTemp=newTemp->next;
       }
 
       return newHead;
