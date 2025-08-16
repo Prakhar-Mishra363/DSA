@@ -35,7 +35,7 @@ public:
         oldTemp=oldTemp->next;
         newTemp=newTemp->next;
       }
-      newTemp=newHead;
+    //   newTemp=newHead;
       oldTemp=head;
       while(oldTemp){
         if(oldTemp->random){
