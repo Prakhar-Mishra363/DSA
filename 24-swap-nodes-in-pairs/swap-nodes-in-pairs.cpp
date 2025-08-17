@@ -10,42 +10,45 @@
  */
 class Solution {
 public:
-    ListNode* reversePairs(ListNode* head){
-        int count=0;
-        ListNode* temp=head;
-        while(count<2){
-            if(temp==NULL)return head;
-            temp=temp->next;
-            count++;
-        }
-        //node where reversed node will be attached/swapped;
-        ListNode* node=reversePairs(temp);
-        count=0;
-        temp=head;
-        while(count<2){
-            count++;
-            ListNode* temp1=temp;
-            temp=temp->next;
-            temp1->next=node;
-            node=temp1;
-        }return node;
-    }
+    // ListNode* reversePairs(ListNode* head){
+    //     int count=0;
+    //     ListNode* temp=head;
+    //     while(count<2){
+    //         if(temp==NULL)return head;
+    //         temp=temp->next;
+    //         count++;
+    //     }
+    //     //node where reversed node will be attached/swapped;
+    //     ListNode* node=reversePairs(temp);
+    //     count=0;
+    //     temp=head;
+    //     while(count<2){
+    //         count++;
+    //         ListNode* temp1=temp;
+    //         temp=temp->next;
+    //         temp1->next=node;
+    //         node=temp1;
+    //     }return node;
+    // }
     ListNode* swapPairs(ListNode* head) {
         //ensures there are more than one nodes in the list
         if(!head||!head->next)return head;
-        return reversePairs(head);
-        // ListNode* first,*second,*head1;
-        // first=head;
-        // second=head->next;
-        // head1=second;
-        // while(first&&second){
-        //     ListNode* pre = first
-        //     ListNode* temp=second->next;
-        //     first->next=temp;
-        //     second->next=first;
-        //     first=temp->next;
-        //     second=first->next;
-        // }
-        // return head1;
+        // return reversePairs(head);
+        ListNode* first,*second,*head1;
+        first=head;
+        second=head->next;
+        head=second;
+        ListNode* prev=NULL;
+        while(first&&second){
+            // ListNode* pre = first
+            ListNode* temp = second->next;
+            if(prev)prev->next=second;
+            first->next=temp;
+            second->next=first;
+            prev=first;
+            first=temp;
+            if(first)second=temp->next;
+        }
+        return head;
     }
 };
