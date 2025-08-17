@@ -31,7 +31,21 @@ public:
         }return node;
     }
     ListNode* swapPairs(ListNode* head) {
+        //ensures there are more than one nodes in the list
         if(!head||!head->next)return head;
         return reversePairs(head);
+        // ListNode* first,*second,*head1;
+        // first=head;
+        // second=head->next;
+        // head1=second;
+        // while(first&&second){
+        //     ListNode* pre = first
+        //     ListNode* temp=second->next;
+        //     first->next=temp;
+        //     second->next=first;
+        //     first=temp->next;
+        //     second=first->next;
+        // }
+        // return head1;
     }
 };
