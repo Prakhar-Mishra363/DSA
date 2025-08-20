@@ -25,6 +25,6 @@ public:
             }
             i++;
         }
-        return st.empty();
+        return st.empty()==1;
     }
 };
