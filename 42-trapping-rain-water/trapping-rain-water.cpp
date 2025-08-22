@@ -15,7 +15,7 @@ public:
         }
         int ans=0;
         for(int i=0;i<arr.size();i++){
-            if(leftMax[i]==arr[i]||rightMax[i]==arr[i])continue;
+            // if(leftMax[i]==arr[i]||rightMax[i]==arr[i])continue;
             ans+=min(rightMax[i],leftMax[i])-arr[i];
         }
         return ans;
