@@ -29,8 +29,8 @@ public:
                 v.push_back(grid[row++][col++]);
                 size--;
             }
-            sort(v.begin(),v.end());
-            reverse(v.begin(),v.end());
+            sort(v.begin(),v.end(),greater<int>());
+            // reverse(v.begin(),v.end());
             size=n-i;
             row=i;
             col=0;
