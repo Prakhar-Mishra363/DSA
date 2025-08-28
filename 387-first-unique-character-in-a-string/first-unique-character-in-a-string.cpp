@@ -1,17 +1,12 @@
 class Solution {
 public:
     int firstUniqChar(string s) {
-        unordered_map<char,int>m;
-        queue<pair<char,int>>q;
-        for(int i=0;i<s.length();i++){
-            m[s[i]]++;
-            if(m[s[i]]==1){
-                q.push({s[i],i});
-            }
+        vector<int>v(26,0);
+        for(auto val:s){
+            ++v[val-'a'];
         }
-        while(!q.empty()){
-            if(m[q.front().first]==1)return q.front().second;
-            q.pop();
+        for(int i=0;i<s.length();i++){
+            if(v[s[i]-'a']==1)return i;
         }
         return -1;
     }
