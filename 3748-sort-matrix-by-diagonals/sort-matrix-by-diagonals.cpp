@@ -5,22 +5,22 @@ public:
         vector<int>v;
         for(int i=1;i<n-1;i++){
             int size=n-i;
-            int row=i,col=0;
+            int col=i,row=0;
             while(size){
-                v.push_back(grid[col][row]);
+                v.push_back(grid[row][col]);
                 size--;
                 col++;row++;
             }
             sort(v.begin(),v.end());
             size=n-i;
-            row=i;
-            col=0;
+            col=i;
+            row=0;
             int idx=0;
             while(size){
-                grid[col++][row++]=v[idx++];
+                grid[row++][col++]=v[idx++];
                 size--;
             }
-            while(v.size())v.pop_back();
+            v.clear();
         }
         for(int i=0;i<n-1;i++){
             int size=n-i;
@@ -39,7 +39,7 @@ public:
                 grid[row++][col++]=v[idx++];
                 size--;
             }
-            while(v.size())v.pop_back();
+            v.clear();
         }
         return grid;
     }
