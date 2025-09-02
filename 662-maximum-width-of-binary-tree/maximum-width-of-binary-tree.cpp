@@ -16,13 +16,12 @@ public:
         q.push({root,0});
         unsigned long long ans=0;
         while(!q.empty()){
-            unsigned long long  start=0,end=0;
+            unsigned long long  start=q.front().second,end=q.back().second;
+            ans = max(ans,end-start+1);
             int currSize=q.size();
             for(int i=0;i<currSize;i++){
                 TreeNode* currNode = q.front().first;
                 unsigned long long idx = q.front().second;
-                if(i==0)start=idx;
-                if(i==currSize-1)end=idx;
                 q.pop();
                 if(currNode->left){
                     q.push({currNode->left,2*idx+1});
@@ -31,7 +30,6 @@ public:
                     q.push({currNode->right,2*idx+2});
                 }
             }
-            ans = max(ans,end-start+1);
         }
         return ans;
     }
