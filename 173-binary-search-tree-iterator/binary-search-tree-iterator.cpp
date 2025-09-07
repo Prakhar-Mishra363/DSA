@@ -19,11 +19,11 @@ public:
 
     int next() {
         if(s.empty())return -1;
-        int val = s.top()->val;
-        TreeNode* temp = s.top()->right;
+        // int val = s.top()->val;
+        TreeNode* temp = s.top();
         s.pop();
-        helper(temp);
-        return val;
+        helper(temp->right);
+        return temp->val;
     }
 
     bool hasNext() {
