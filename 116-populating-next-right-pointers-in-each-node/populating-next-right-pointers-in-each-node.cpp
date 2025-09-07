@@ -27,8 +27,8 @@ public:
         }else return root;
         while(!q.empty()){
             int currSize = q.size();
-            Node* curr = NULL;
             for(int i=0;i<currSize;i++){
+               Node* curr = NULL;
                curr = q.front();
                q.pop();
                if(i<currSize-1){
