@@ -28,17 +28,15 @@ public:
         while(!q.empty()){
             int currSize = q.size();
             Node* curr = NULL;
-            for(int i=0;i<currSize-1;i++){
+            for(int i=0;i<currSize;i++){
                curr = q.front();
                q.pop();
-               curr->next = q.front(); 
+               if(i<currSize-1){
+                curr->next = q.front(); 
+               }
                if(curr->left)q.push(curr->left);
                if(curr->right)q.push(curr->right);
             }
-            curr = q.front();
-            q.pop();
-            if(curr->left)q.push(curr->left);
-            if(curr->right)q.push(curr->right); 
         }
        return root; 
     }
