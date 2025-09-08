@@ -16,14 +16,7 @@ public:
             }
         }
         long ans = 0;
-        if(pivot==-1){
-            reverse(store.begin(),store.end());
-            for(int i=store.size()-1;i>=0;i--){
-                ans = ans*10+store[i];
-            }
-            if(ans>INT_MAX || ans<=n)return -1;
-            return ans;
-        }
+        if(pivot==-1)return -1;
         for(int i=end;i>=0;i--){
             if(store[i]>store[pivot]){
                 swap(store[i],store[pivot]);
