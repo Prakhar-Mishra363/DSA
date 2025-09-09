@@ -10,7 +10,7 @@ public:
                 s.erase(nums[left]);
                 left++;
             }
-            if(s.find(nums[right])!=s.end() && abs(left-right)<=k)return true;
+            if(s.find(nums[right])!=s.end())return true;
             s.insert(nums[right]);
             right++;
         }
