@@ -1,43 +1,34 @@
+#include<numeric>
 class Solution {
 public:
-    bool isValid(vector<int> &nums, int max, int k){
-        int student = 1,sum=0;
+    int isPossibleToAllocate(vector<int>& nums,int minimizedSum ){
+        int subArray = 1;
+        int currSum =0;
         for(int i=0;i<nums.size();i++){
-            if(nums[i]>max){
-                return false;
-            }
-            if((sum+nums[i])<=max){
-                sum+=nums[i];
+            if(currSum+nums[i]<=minimizedSum){
+                currSum += nums[i];
             }else{
-                student++;
-                sum=nums[i];
+                subArray++;
+                currSum = nums[i];
             }
         }
-        if(student<=k){
-            return true;
-        }else{
-            return false;
-        }
+        // if(currSum <= minimizedSum)subArray++;
+        return subArray;
     }
     int splitArray(vector<int>& nums, int k) {
-        int maxSum = 0,ans=0;
-        if(k>nums.size()){
-            return -1;
+        int n=nums.size()-1;
+        int low = *max_element(nums.begin(),nums.end());
+        int high = 0;
+        for(int i=0;i<=n;i++){
+            high += nums[i];
         }
-        for(int i=0;i<nums.size();i++){
-            maxSum += nums[i];
+        int ans = low;
+        while(low <= high){
+            int mid = low + (high - low)/2;
+            int allocatedArr = isPossibleToAllocate(nums,mid);
+            if(allocatedArr>k) low = mid+1;
+            else high = mid-1;
         }
-        int start=0,end=maxSum;
-        while(start<=end){
-            int mid = start + (end-start)/2;
-            if(isValid(nums,mid,k)){
-                ans = mid;
-                end = mid-1;
-            }else{
-                start = mid+1;
-            }
-        }
-        return ans;
-        
+        return low;
     }
 };
