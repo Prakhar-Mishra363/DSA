@@ -1,26 +1,55 @@
 class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-        vector<int>merged;
-        int len1 = nums1.size(),len2 = nums2.size();
+        int n = nums1.size()+nums2.size();
+        int n2 = n/2;
+        int n1 = n2-1;
         int i=0,j=0;
-        while(i<len1 && j<len2){
+        int count = -1;
+        int ele1 = -1, ele2 = -1;
+        bool flag = false;
+        while(i<nums1.size() && j<nums2.size()){
             if(nums1[i]<nums2[j]){
-                merged.push_back(nums1[i++]);
-            }else{
-                merged.push_back(nums2[j++]);
+                count++;
+                if(count == n1)ele1 = nums1[i];
+                if(count == n2){
+                    ele2 = nums1[i];
+                    flag = true;
+                    break;
+                }
+                i++;
             }
+            else {
+                count++;
+                if(count == n1)ele1 = nums2[j];
+                if(count == n2){
+                    ele2 = nums2[j];
+                    flag=true;
+                    break;
+                }
+                j++;
+            }
+            
         }
-        while(i<len1){
-            merged.push_back(nums1[i++]);
+        while(i<nums1.size() && !flag){
+            count++;
+            if(count == n1)ele1 = nums1[i];
+            if(count == n2){
+                ele2 = nums1[i];
+                break;
+            }
+            i++;
         }
-        while(j<len2){
-            merged.push_back(nums2[j++]);
+        while(j<nums2.size() && !flag){
+            count++;
+            if(count == n1)ele1 = nums2[j];
+            if(count == n2){
+                ele2 = nums2[j];
+                break;
+            }
+            j++;
         }
-        int totalEle = merged.size();
-        if(totalEle & 1){
-            return merged[totalEle/2];
-        }
-        return ((float)merged[totalEle/2] + (float)merged[totalEle/2-1])/2;
+        if(n & 1)return ele2;
+        return ((float(ele1)+float(ele2))/2);
     }
 };
