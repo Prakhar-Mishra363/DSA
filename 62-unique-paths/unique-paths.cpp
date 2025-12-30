@@ -17,8 +17,9 @@ public:
     }
     int uniquePaths(int m, int n) {
         //memoization
-        vector<vector<int>>dp(m,vector<int>(n,-1));
-        for(int i=0;i<n;i++){
+        //vector<vector<int>>dp(m,vector<int>(n,-1));
+        //optimization after seeing pattern in the problem
+        /*for(int i=0;i<n;i++){
             dp[m-1][i]=1;
         }
         for(int i=0;i<m;i++){
@@ -29,9 +30,23 @@ public:
                 dp[row][col] = dp[row+1][col] + dp[row][col+1];
             }
         }
-        return dp[0][0];
+        return dp[0][0];*/
+        //using recursion + memoization
         // int result = uniquePathsHelper(0,0,m-1,n-1,dp);
 
+        vector<int>dp(n,0);
+        for(int row=0;row<m;row++){
+            vector<int>temp(n,0);
+            for(int col=0;col<n;col++){
+                if(row == 0 && col == 0){
+                    temp[col]=1;
+                }else{
+                    temp[col] = col == 0 ? dp[col] : temp[col-1] + dp[col];
+                }
+            }
+            dp = temp;
+        }
+        return dp[n-1];
         
         // return result;
     }
