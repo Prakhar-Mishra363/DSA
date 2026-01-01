@@ -11,16 +11,19 @@ public:
     */
     int minimumTotal(vector<vector<int>>& arr) {
         if(arr.size()==1)return arr[0][0];
+        /*
         int m = arr.size()-1;
         vector<vector<int>>dp(m+1);
         for(int i=0;i<=m;i++){
             dp[i].resize(arr[i].size(),-1);
         }
+        */
         /* -> recursion + memoization
         int result = minimumTotalHelper(0,0,arr,dp);
         return result;
         */
         //tabulation
+        /*
         for(int i=0;i<arr[m].size();i++){
             dp[m][i] = arr[m][i];
         }
@@ -30,11 +33,18 @@ public:
                 dp[currRow][currCol] = min(dp[currRow+1][currCol],dp[currRow+1][currCol+1]) + arr[currRow][currCol] ;
             }
         }
-        for(auto a : dp){
-            for(auto b : a){
-                cout<<b<<" ";
-            }cout<<endl;
-        }
         return dp[0][0];
+        */
+        //space optimization
+        int m = arr.size()-1;
+        vector<int>dp = arr[arr.size()-1];
+        for(int currRow=m-1 ; currRow>=0 ; currRow--){
+            vector<int>temp(currRow+1);
+            for(int currCol = arr[currRow].size()-1; currCol>=0 ; currCol--){
+                temp[currCol] = min(dp[currCol],dp[currCol+1]) + arr[currRow][currCol];
+            }
+            dp = temp;
+        }
+        return dp[0];
     }
 };
