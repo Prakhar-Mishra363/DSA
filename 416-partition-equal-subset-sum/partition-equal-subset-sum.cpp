@@ -23,7 +23,7 @@ public:
         // return result;
         vector<vector<bool>>dp(n,vector<bool>(sum/2+1,0));
         for(int i=0 ; i<n ; i++)dp[i][0] = true;
-        dp[n-1][nums[n-1]] = true;
+        if(nums[n-1] <= sum/2)dp[n-1][nums[n-1]] = true;
         for(int idx=n-2; idx >= 0; idx--){
             for(int target = 1; target <= sum/2 ; target++){
                 bool onePartition = (target >= nums[idx]) ? dp[idx+1][target - nums[idx]] : false;
