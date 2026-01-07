@@ -25,18 +25,13 @@ public:
         }
         return result;
         */
-        //Tabulation
-        
-        
+
+        /*
+        -> Tabulation 
         vector<vector<unsigned long long>>dp(n,vector<unsigned long long>(amount+1,0));
         for(int i=0;i<=amount;i++){
             dp[n-1][i] = (i % coins[n-1] == 0) ? 1 : 0;
         }
-        // if(coins[n-1] <= amount ){
-        //     if(amount % coins[n-1] == 0)dp[n-1][amount] = 1;
-        //     dp[n-1][coins[n-1]] = 1;
-        // }
-        // else dp[n-1][coins] = 1;
         for(int idx=n-2; idx>= 0; idx--){
             for(int currAmount=0; currAmount<= amount; currAmount++){
                 unsigned long long picked = (currAmount >= coins[idx]) ? dp[idx][currAmount - coins[idx]] : 0 ;
@@ -44,12 +39,21 @@ public:
                 dp[idx][currAmount] = (picked + left);
             }
         }
-        // for(auto a : dp){
-        //     for(auto b : a){
-        //         cout<<b<<" ";
-        //     }cout<<endl;
-        // }
         return dp[0][amount];
-        
+        */
+        //space optimization in tabulation
+        vector<unsigned long long>dp(amount + 1, 0), temp(amount + 1, 0);
+        for(int i=0;i<=amount;i++){
+            dp[i] = (i % coins[n-1] == 0) ? 1 : 0; 
+        }
+        for(int idx = n-2; idx>=0 ; idx--){
+            for(int currAmount = 0 ; currAmount<=amount ; currAmount++){
+                unsigned long long picked = (currAmount >= coins[idx]) ? temp[currAmount - coins[idx]] : 0 ;
+                unsigned long long left = dp[currAmount];
+                temp[currAmount] = (picked + left);
+            }
+            dp = temp;
+        }
+        return dp[amount];
     }
 };
