@@ -23,11 +23,13 @@ public:
         }
         return result;
         */
+        /*
         //tabulation
-        vector<vector<unsigned long long>>dp(s.size() + 1 , vector<unsigned long long>(t.size() + 1 , 0));
-        for(int i=0; i<=s.size() ; i++){
-            dp[i][t.size()] = 1;
-        }
+        // vector<vector<unsigned long long>>dp(s.size() + 1 , vector<unsigned long long>(t.size() + 1 , 0));
+        // vector<unsigned long long>dp(t.size() + 1 , 0);
+        // for(int i=0; i<=s.size() ; i++){
+        //     dp[i][t.size()] = 1;
+        // }
         for(int idx1=s.size()-1 ; idx1>=0 ; idx1--){
             for(int idx2=t.size()-1 ; idx2>=0 ; idx2--){
                 if(s[idx1] == t[idx2]){
@@ -38,5 +40,19 @@ public:
             }
         }
         return dp[0][0];
+        */
+        vector<unsigned long long>dp(t.size() + 1 , 0) , tmp(t.size() + 1 , 0);
+        for(int idx1=s.size()-1 ; idx1>=0 ; idx1--){
+            dp[t.size()] = 1;
+            for(int idx2=t.size()-1 ; idx2>=0 ; idx2--){
+                if(s[idx1] == t[idx2]){
+                    tmp[idx2] = (dp[idx2 + 1] + dp[idx2]); 
+                }else{
+                    tmp[idx2] = dp[idx2];
+                }
+            }
+            dp = tmp;
+        }
+        return dp[0];
     }
 };
