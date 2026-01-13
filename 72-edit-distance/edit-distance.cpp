@@ -23,6 +23,8 @@ public:
         }
         return result;
         */
+        /*
+        //tabulation
         vector<vector<int>>dp(word1.size() + 1 , vector<int>(vector<int>(word2.size() + 1 , 0)));
         for(int i=0;i<=word1.size();i++){
             dp[i][word2.size()] = word1.size()-i;
@@ -43,5 +45,26 @@ public:
             }
         }
         return dp[0][0];
+        */
+        //space optimization for tabulation
+        vector<int>dp(word2.size()+1 , 0), tmp(word2.size() + 1 , 0);
+        for(int i=0; i<=word2.size() ; i++){
+            dp[i] = word2.size()-i;
+        }
+        for(int idx1 = word1.size()-1 ; idx1>= 0 ; idx1--){
+            tmp[word2.size()] = word1.size()-idx1;
+            for(int idx2=word2.size()-1 ; idx2>=0 ; idx2--){
+                if(word1[idx1] == word2[idx2]){
+                    tmp[idx2] = dp[idx2 + 1];
+                }else{
+                    int replaced = dp[idx2 + 1];
+                    int inserted = tmp[idx2 + 1];
+                    int erased = dp[idx2];
+                    tmp[idx2] =  1 + min(replaced , min(inserted , erased));
+                }
+            }
+            dp = tmp;
+        }
+        return dp[0];
     }
 };
