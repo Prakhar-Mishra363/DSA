@@ -32,32 +32,39 @@ public:
     }
     int maxProfit(vector<int>& prices) {
         int maxColumn = *max_element(prices.begin() , prices.end());
+        /*
         //recursion + memoization
         vector<vector<int>>dp(prices.size() + 1 , vector<int>(2 , -1));
         return maxProfitHelper(0 , false, prices , dp);
+        */
         //tabulation
-        // int n = prices.size();
-        // vector<vector<int>> dp(prices.size() , vector<int>(maxColumn+1 , 0));
+        int n = prices.size();
+        vector<vector<int>> dp(prices.size() , vector<int>(2 , 0));
         // vector<int>dp(maxColumn+1 , 0) , tmp(maxColumn+1 , 0);
-        //base case
-        // for(int i=1 ; i<=maxColumn ; i++){//i can't be zero as having 0 stock means u n
-        //     dp[i] = (prices[n-1] > i) ? prices[n-1] - i : 0;
+        // base case
+        dp[n-1][0] = 0;
+        dp[n-1][1] = prices[n-1];
+        for(int idx = n-2 ; idx>=0 ; idx--){
+            for(int hasBought=0 ; hasBought<=1 ; hasBought++){
+                if(hasBought ){
+                    //case 1 -> we try to sell it on another day regardless of today's stock price
+                    int sellOnAnotherDay = dp[idx + 1][hasBought];
+                    //case 2nd -> if today's stock price is greater than boughtStockPrice then we sell it today and try to buy the stock another day else 0
+                    int sellingStock = prices[idx] + dp[idx + 1][0];
+                    dp[idx][hasBought] = max(sellOnAnotherDay , sellingStock);
+                }else{
+                    int stockIsBought = dp[idx + 1][1]- prices[idx];
+                    int doNotBuy = dp[idx + 1][0];
+                    dp[idx][hasBought] = max(stockIsBought , doNotBuy);
+                }
+            }
+        }
+        // for(auto a : dp){
+        //     for(auto b : a){
+        //         cout<<b<<" ";
+        //     }cout<<endl;
         // }
-        // for(int idx = n-2 ; idx>=0 ; idx--){
-        //     for(int boughtStockPrice=0 ; boughtStockPrice<=maxColumn ; boughtStockPrice++){
-        //         if(boughtStockPrice > 0){
-        //             int sellOnAnotherDay = dp[boughtStockPrice];
-        //             int sellingStock = (prices[idx] > boughtStockPrice) ? prices[idx] - boughtStockPrice + dp[0] : 0;
-        //             tmp[boughtStockPrice] = max(sellOnAnotherDay , sellingStock);
-        //         }else{
-        //             int stockIsBought = dp[prices[idx]];
-        //             int doNotBuy = dp[0];
-        //             tmp[boughtStockPrice] = max(stockIsBought , doNotBuy);
-        //         }
-        //     }
-        //     dp = tmp;
-        // }
-        // return dp[0];
+        return dp[0][0];
 
     }
 };
