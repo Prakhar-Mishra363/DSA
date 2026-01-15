@@ -39,32 +39,28 @@ public:
         */
         //tabulation
         int n = prices.size();
-        vector<vector<int>> dp(prices.size() , vector<int>(2 , 0));
-        // vector<int>dp(maxColumn+1 , 0) , tmp(maxColumn+1 , 0);
+        // vector<vector<int>> dp(prices.size() , vector<int>(2 , 0));
+        vector<int>dp(2 , 0) , tmp(2 , 0);
         // base case
-        dp[n-1][0] = 0;
-        dp[n-1][1] = prices[n-1];
+        dp[0] = 0;
+        dp[1] = prices[n-1];
         for(int idx = n-2 ; idx>=0 ; idx--){
             for(int hasBought=0 ; hasBought<=1 ; hasBought++){
                 if(hasBought ){
                     //case 1 -> we try to sell it on another day regardless of today's stock price
-                    int sellOnAnotherDay = dp[idx + 1][hasBought];
+                    int sellOnAnotherDay = dp[hasBought];
                     //case 2nd -> if today's stock price is greater than boughtStockPrice then we sell it today and try to buy the stock another day else 0
-                    int sellingStock = prices[idx] + dp[idx + 1][0];
-                    dp[idx][hasBought] = max(sellOnAnotherDay , sellingStock);
+                    int sellingStock = prices[idx] + dp[0];
+                    tmp[hasBought] = max(sellOnAnotherDay , sellingStock);
                 }else{
-                    int stockIsBought = dp[idx + 1][1]- prices[idx];
-                    int doNotBuy = dp[idx + 1][0];
-                    dp[idx][hasBought] = max(stockIsBought , doNotBuy);
+                    int stockIsBought = dp[1]- prices[idx];
+                    int doNotBuy = dp[0];
+                    tmp[hasBought] = max(stockIsBought , doNotBuy);
                 }
             }
+            dp = tmp;
         }
-        // for(auto a : dp){
-        //     for(auto b : a){
-        //         cout<<b<<" ";
-        //     }cout<<endl;
-        // }
-        return dp[0][0];
+        return dp[0];
 
     }
 };
