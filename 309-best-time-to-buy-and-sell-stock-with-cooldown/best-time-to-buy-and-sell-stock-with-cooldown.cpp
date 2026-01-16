@@ -19,7 +19,9 @@ public:
         vector<vector<int>>dp(prices.size() , vector<int>(2 , -1));
         return maxProfitHelper(day , false , prices , dp);
         */
+        //Tabulation
         int n=prices.size();
+        /*
         vector<vector<int>>dp(n+2 , vector<int>(2 , 0));
         for(int day=n-1 ; day>=0 ; day--){
             for(int hasBought=1 ; hasBought>=0 ; hasBought--){
@@ -35,5 +37,24 @@ public:
             }
         }
         return dp[0][0];
+        */
+        //space optimization in tabulation
+        vector<int>dp(2 , 0) , tmp(2 , 0) , prev(2 , 0);
+        for(int day=n-1 ; day>=0 ; day--){
+            for(int hasBought=1 ; hasBought>=0 ; hasBought--){
+                if(hasBought){
+                    int sellingToday = prices[day] + prev[0];
+                    int sellingAnotherDay = dp[hasBought];
+                    tmp[hasBought] = max(sellingToday , sellingAnotherDay);
+                }else{
+                    int buyingToday = dp[1]- prices[day];
+                    int notBuyingToday = dp[hasBought];
+                    tmp[hasBought] = max(buyingToday , notBuyingToday);
+                }
+            }
+            prev = dp;
+            dp = tmp;
+        }
+        return dp[0];
     }
 };
