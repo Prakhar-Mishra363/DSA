@@ -9,7 +9,7 @@ public:
     }
     int tabulationOptimization(int n , vector<vector<int>> &dp , const vector<int> &nums){
         for(int idx=n ; idx>=1 ; idx--){
-            for(int prev=0 ; prev<=n-1 ; prev++){
+            for(int prev=n ; prev>=0 ; prev--){
                 int pick = (prev == 0 || nums[idx-1] > nums[prev-1]) ? 1 + dp[idx + 1][idx] : -1e7;
                 int notPick = dp[idx + 1][prev];
                 dp[idx][prev] = max(pick , notPick);
