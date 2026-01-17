@@ -25,7 +25,7 @@ public:
                 int notPick = dp[prev];
                 tmp[prev] = max(pick , notPick);
             }
-            dp = tmp;
+            dp.swap(tmp);
         }
         return dp[0];
     }
