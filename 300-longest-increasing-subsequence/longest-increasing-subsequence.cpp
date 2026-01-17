@@ -18,16 +18,16 @@ public:
         return dp[1][0];
     }
     int spaceOptimization(int n , const vector<int> &nums){
-        vector<int>dp(n + 1 , 0) , tmp(n + 1 , 0);
-        for(int idx=n ; idx>=1 ; idx--){
-            for(int prev=0 ; prev<=n-1 ; prev++){
-                int pick = (prev == 0 || nums[idx-1] > nums[prev-1]) ? 1 + dp[idx] : -1e7;
-                int notPick = dp[prev];
-                tmp[prev] = max(pick , notPick);
+        vector<int>dp(n , 1);
+        for(int idx=1 ; idx<n ; idx++){
+            for(int prv=idx-1 ; prv>=0 ; prv--){
+                if(nums[idx] > nums[prv]){
+                    dp[idx] = max(1 + dp[prv] , dp[idx]);
+                }
             }
-            dp.swap(tmp);
         }
-        return dp[0];
+        return *max_element(dp.begin() , dp.end());
+        
     }
     int lengthOfLIS(vector<int>& nums) {
         /*
