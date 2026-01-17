@@ -7,8 +7,25 @@ public:
         int notPick = lengthOfLISHelper(idx + 1 , prev , nums , dp);
         return dp[idx][prev] = max(pick , notPick);
     }
+    int tabulationOptimization(int n , vector<vector<int>> &dp , const vector<int> &nums){
+        for(int idx=n ; idx>=1 ; idx--){
+            for(int prev=0 ; prev<=n-1 ; prev++){
+                int pick = (prev == 0 || nums[idx-1] > nums[prev-1]) ? 1 + dp[idx + 1][idx] : -1e7;
+                int notPick = dp[idx + 1][prev];
+                dp[idx][prev] = max(pick , notPick);
+            }
+        }
+        return dp[1][0];
+    }
     int lengthOfLIS(vector<int>& nums) {
+        /*
+        recursion + memoization
         vector<vector<int>>dp(nums.size() + 1 , vector<int>(nums.size()+ 1 , -1));
-        return lengthOfLISHelper(1 , 0 , nums , dp);
+        int result = lengthOfLISHelper(1 , 0 , nums , dp);
+        */
+        int n=nums.size();
+        vector<vector<int>>dp(n+2 , vector<int>(n+1 , 0));
+        return tabulationOptimization(n , dp , nums);
+        
     }
 };
