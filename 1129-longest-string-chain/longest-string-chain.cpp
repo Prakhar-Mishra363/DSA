@@ -48,7 +48,10 @@ public:
         }
     }
     int longestStrChain(vector<string>& words) {
-        selectionSortBySize(words);
+        sort(words.begin(), words.end(),
+            [](const string &a, const string &b) {
+                return a.size() < b.size();
+            });
         // for(auto a:words){
         //     cout<<a<<" ";
         // }cout<<endl;
