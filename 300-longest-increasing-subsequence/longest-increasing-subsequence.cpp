@@ -18,16 +18,55 @@ public:
         return dp[1][0];
     }
     int spaceOptimization(int n , const vector<int> &nums){
-        vector<int>dp(n , 1);
-        for(int idx=1 ; idx<n ; idx++){
+        vector<int>dp(n , 1) , hash(n , 0);
+        for(int i=0; i<n ; i++){
+            hash[i] = i;
+        }
+        int maxIdx=0;
+        for(int idx=0 ; idx<n ; idx++){
             for(int prv=idx-1 ; prv>=0 ; prv--){
                 if(nums[idx] > nums[prv]){
+                    hash[idx] = (1 + dp[prv] > dp[idx]) ? prv : hash[idx];
                     dp[idx] = max(1 + dp[prv] , dp[idx]);
+                    maxIdx = (dp[idx] > dp[maxIdx]) ? idx : maxIdx;
                 }
             }
         }
-        return *max_element(dp.begin() , dp.end());
+        vector<int>seq(dp[maxIdx] , 0);
+        int currIdx = maxIdx;
+        int i=dp[maxIdx]-1;
+        while(hash[currIdx] != currIdx){
+            seq[i--] = nums[currIdx];
+            currIdx = hash[currIdx];
+        }
+        seq[0] = nums[currIdx];
+        return dp[maxIdx];
         
+    }
+    int lowerBound(const vector<int> &result , int key){
+        int start=0 , end=result.size()-1;
+        while(start <= end){
+            int mid = start + (end - start)/2;
+            if(result[mid] >= key){
+                end = mid-1;
+            }else{
+                start = start + 1;
+            }
+        }
+        return start;
+    }
+    int binary_search_approach(const vector<int> &nums){
+        vector<int>result;
+        result.push_back(nums[0]);
+        for(int i=1 ; i<nums.size() ; i++){
+            if(nums[i] > result[result.size() - 1]){
+                result.push_back(nums[i]);
+            }else{
+                int idx = lowerBound(result  , nums[i]);
+                result[idx] = nums[i];
+            }
+        }
+        return result.size();
     }
     int lengthOfLIS(vector<int>& nums) {
         /*
@@ -41,7 +80,8 @@ public:
         //tabulation
         return tabulationOptimization(n , dp , nums);
         */
-        return spaceOptimization(n , nums);
+        // return spaceOptimization(n , nums);
+        return binary_search_approach(nums);
         
     }
 };
