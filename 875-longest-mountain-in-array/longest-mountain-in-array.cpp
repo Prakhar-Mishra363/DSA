@@ -6,22 +6,19 @@ public:
         // vector<int>dpInc(n , 1);
         // vector<int>dpDec(n , 1);
         int maxEle=0;
-        for(int idx=1 ; idx<=n-2 ; idx++){
-            int prev=idx-1;
-            int prevCount=0;
-            while(prev>=0 && arr[prev] < arr[prev+1]){
-                prevCount++;
-                prev--;
+        int i=1;
+        while(i<arr.size()){
+            int increasing=0 , decreasing=0;
+            while(i<arr.size() && arr[i-1] < arr[i]){
+                i++; increasing++;
             }
-            int nextIdx=idx+1;
-            int nextCount=0;
-            while(nextIdx < n && (arr[nextIdx] < arr[nextIdx-1])){
-                nextCount++;
-                nextIdx++;
+            while(i<n && arr[i-1] > arr[i]){
+                i++; decreasing++;
             }
-            if(prevCount>0 && nextCount>0){
-                maxEle =max(maxEle , prevCount+ nextCount + 1);
+            if(increasing > 0 && decreasing>0){
+                maxEle = max(maxEle , decreasing + increasing +1);
             }
+            while(i<n && arr[i-1] == arr[i])i++;
         }
         return maxEle;
 
