@@ -2,9 +2,9 @@ class Solution {
 public:
     int longestMountainHelper(vector<int> &arr){
         int n=arr.size();
-        vector<int>dp(n , 1);
-        vector<int>dpInc(n , 1);
-        vector<int>dpDec(n , 1);
+        // vector<int>dp(n , 1);
+        // vector<int>dpInc(n , 1);
+        // vector<int>dpDec(n , 1);
         int maxEle=0;
         for(int idx=1 ; idx<=n-2 ; idx++){
             int prev=idx-1;
@@ -19,10 +19,8 @@ public:
                 nextCount++;
                 nextIdx++;
             }
-            dpInc[idx]=prevCount;
-            dpDec[idx]=nextCount;
-            if(dpInc[idx]>0 && dpDec[idx]>0){
-                maxEle =max(maxEle , dpInc[idx] + dpDec[idx] + 1);
+            if(prevCount>0 && nextCount>0){
+                maxEle =max(maxEle , prevCount+ nextCount + 1);
             }
         }
         return maxEle;
