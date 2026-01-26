@@ -16,7 +16,19 @@ public:
         cuts.push_back(n);
         cuts.insert(cuts.begin() , 0);
         sort(cuts.begin() , cuts.end());
-        vector<vector<int>>dp(cutSize+1 , vector<int>(cutSize+1 , -1));
-        return minCostHelper(1, cutSize , cuts , dp);
+        // return minCostHelper(1, cutSize , cuts , dp);
+        vector<vector<int>>dp(cutSize+2 , vector<int>(cutSize+2 , 0));
+        for(int i=cutSize ; i>=1 ; i--){
+            for(int j=1 ; j<=cutSize ; j++){
+                if(i>j)continue;
+                int minCost=1e9;
+                for(int idx=i ; idx<=j ; idx++){
+                    int madeCutLen = (cuts[j+1]-cuts[i-1]) + dp[i][idx-1]+ dp[idx+1][j];
+                    minCost = min(minCost , madeCutLen);
+                }
+                dp[i][j] = minCost;
+            }
+        }
+        return dp[1][cutSize];
     }
 };
