@@ -1,23 +1,5 @@
 class Solution {
 public:
-    bool bfs(int node , vector<vector<pair<int,int>>> &graph){
-        queue<int>q;
-        vector<bool>vis(graph.size(), false);
-        q.push(node);
-        vis[node]=true;
-        while(!q.empty()){
-            int curr_node = q.front();
-            q.pop();
-            for(auto neighbour : graph[curr_node]){
-                int neigh_node=neighbour.first;
-                if(!vis[neigh_node]){
-                    vis[neigh_node]=true;
-                    q.push(neigh_node);
-                }
-            }
-        }
-        return vis[graph.size()-1]==true;
-    }
     int dijksta(vector<vector<pair<int,int>>> &graph , vector<int> &dis){
         priority_queue<pair<int,int> , vector<pair<int,int>> , greater<pair<int,int>>> pq;//dis, node
         pq.push({0 , 0});//dis=0 , node=0;
@@ -47,13 +29,9 @@ public:
         }
         //last one will be the node to
         //need to check if the n-1 th node is reachable and if it is then from which node
-        int node=-1;
-        if(bfs(0 , graph)){
-            node = 0;
-        }
-        if(node == -1)return -1;
         vector<int>dis(n,1e9);
-        dis[node]=0;
-        return dijksta(graph , dis); 
+        dis[0]=0;
+        int result = dijksta(graph , dis); 
+        return (result == 1e9) ? -1 : result;
     }
 };
