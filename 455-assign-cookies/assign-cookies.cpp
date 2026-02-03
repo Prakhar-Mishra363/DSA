@@ -14,28 +14,15 @@ public:
     }
     int findContentChildren(vector<int>& g, vector<int>& s) {
         sort(s.begin(),s.end());
+        sort(g.begin(),g.end());
         int result=0;
-        vector<bool> is_assigned(s.size() , false);
-        for(int i=0 ; i<g.size() ; i++){
-            int idx = binary_search(g[i] , s);
-            if(idx==-1)continue;
-            if(s[idx]>=g[i]){
-                if(!is_assigned[idx]){
-                    result++;
-                    is_assigned[idx]=true;
-                }else{
-                    int j=idx+1;
-                    while(j<s.size()){
-                        if(s[j]>=g[i] && !is_assigned[j]){
-                            result++;
-                            is_assigned[j]=true;
-                            break;
-                        }
-                        j++;
-                    }
-                }
+        int greed=0 , cookie=0;
+        while(greed < g.size() && cookie < s.size()){
+            if(g[greed] <= s[cookie]){
+                greed++;
             }
+            cookie++;
         }
-        return result;
+        return greed;
     }
 };
