@@ -9,14 +9,15 @@ public:
                 tens++;
                 fives--;
             }else{
-                if(tens>=1 && fives>=1){
+                if(fives>=3 && tens==0){
+                    twenties++;
+                    fives -= 3;
+                }else if(tens>=1 && fives>=1){
                     twenties++;
                     tens--;
                     fives--;
-                }else if(fives>=3 && tens==0){
-                    twenties++;
-                    fives -= 3;
-                }else return false;
+                }
+                else return false;
 
             }
         }
