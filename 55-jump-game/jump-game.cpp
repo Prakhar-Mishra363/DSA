@@ -11,7 +11,29 @@ public:
         return dp[idx] = 0;
     }
     bool canJump(vector<int>& nums) {
-        vector<int>dp(nums.size() , -1);
-        return canJumpHelper(0 , nums , dp);
+        /*
+            //dp + memoization
+            // vector<int>dp(nums.size() , -1);
+            // return canJumpHelper(0 , nums , dp);
+        */
+        vector<bool>vis(nums.size(),false);
+        int idx=0 ;
+        for(; idx<nums.size() ; ){
+            if(idx >= nums.size()-1)return true;
+            if(nums[idx] > 0){
+                idx += nums[idx];
+            }else{
+                int prev=idx-1;
+                while(prev>=0){
+                    if((prev + nums[prev]) > idx){
+                        idx = prev + nums[prev];
+                        break;
+                    }
+                    prev--;
+                }
+                if(prev == -1)return false;
+            }
+        }
+        return (idx >= nums.size()-1) ? true : false;
     }
 };
