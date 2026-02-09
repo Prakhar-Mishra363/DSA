@@ -5,12 +5,14 @@ public:
     }
     int eraseOverlapIntervals(vector<vector<int>>& inter) {
         sort(inter.begin(),inter.end(),comp);
-        vector<vector<int>>dp;
+        int freeTime=inter[0][1];
         int count=0;
-        dp.push_back(inter[0]);
         for(int i=1 ; i<inter.size() ; i++){
-            if(dp[dp.size()-1][1]<=inter[i][0])dp.push_back(inter[i]);
-            else count++;
+            if(inter[i][0]>=freeTime){
+                freeTime=inter[i][1];
+            }else{
+                count++;
+            }
         }
         return count;
     }
