@@ -1,60 +1,27 @@
 class Solution {
 public:
     string addBinary(string a, string b) {
-        char carry='0';
-        int idx1=a.size()-1;
-        int idx2=b.size()-1;
+        int carry=0;
+        int idx1=a.size()-1 , idx2=b.size()-1;
         string result="";
-        while(idx1>=0 && idx2>=0 ){
-            if((a[idx1]=='1' && b[idx2]=='0' && carry=='0') || 
-                (a[idx1]=='0' && b[idx2]=='1' && carry=='0') || (a[idx1]=='0' && b[idx2]=='0' && carry=='1')){
-                result += '1';
-                carry='0';
-            }
-            else if((a[idx1]=='1' && b[idx2]=='1' && carry=='0') || (a[idx1]=='1' && b[idx2]=='0' && carry=='1')
-                    || (a[idx1]=='0' && b[idx2]=='1' && carry=='1')){
-                result += '0' ;
-                carry='1';
-            }
-            else if(a[idx1]=='0' && b[idx2]=='0' && carry=='0'){
-                result += '0';
-            }
+        while(idx1>=0 || idx2>=0){
+            int b1,b2;
+            if(idx1<0)b1=0;
             else{
-                result += '1';
-                carry='1';
+                b1=a[idx1]-'0'; idx1--;
             }
-            idx1--;
-            idx2--;
-        }
-        while(idx1>=0){
-            if(carry=='1'){
-                if(a[idx1]=='1'){
-                    result += '0' ;
-                    carry='1';
-                }else{
-                    result += '1';
-                    carry=0;
-                }
-            }else{
-                result += a[idx1];
+            if(idx2<0)b2=0;
+            else{
+                b2=b[idx2]-'0'; idx2--;
             }
-            idx1--;
+            int sum=b1+b2+carry;
+            if(sum>1)carry=1;
+            else carry=0;
+            sum = sum%2;
+            char ch=sum+'0';
+            result += ch;
         }
-        while(idx2>=0){
-            if(carry=='1'){
-                if(b[idx2]=='1'){
-                    result += '0';
-                    carry='1';
-                }else{
-                    result += '1';
-                    carry=0;
-                }
-            }else{
-                result += b[idx2];
-            }
-            idx2--;
-        }
-        if(carry=='1')result += '1';
+        if(carry)result += '1';
         reverse(result.begin(),result.end());
         return result;
     }
