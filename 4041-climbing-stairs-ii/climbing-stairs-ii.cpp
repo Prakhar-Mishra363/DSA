@@ -8,8 +8,19 @@ public:
         int jump_three=(curr+3<=dest) ? cost[curr+2] + 9 + climbStairsHelper(curr+3 , dest , cost , dp) : 1e6;
         return dp[curr] = min(jump_one , min(jump_two , jump_three));
     }
-    int climbStairs(int n, vector<int>& costs) {
-        vector<int>dp(n+1,-1);
-        return climbStairsHelper(0 , n , costs , dp);
+    int climbStairs(int n, vector<int>& cost) {
+        vector<int>dp(3,0);
+        dp[1]=dp[2]=1e5;
+        // int result = climbStairsHelper(0 , n , costs , dp);
+        for(int curr=n-1 ; curr>=0 ; curr--){
+            int jump_one=(curr+1<=n) ? cost[curr] + 1 + dp[0]: 1e6;
+            int jump_two=(curr+2<=n) ? cost[curr+1] + 4 + dp[1]: 1e6;
+            int jump_three=(curr+3<=n) ? cost[curr+2] + 9 + dp[2] : 1e6;
+            int result=min(jump_one , min(jump_two , jump_three));
+            dp[2]=dp[1];
+            dp[1]=dp[0];
+            dp[0]=result;
+        }
+        return dp[0];
     }
 };
