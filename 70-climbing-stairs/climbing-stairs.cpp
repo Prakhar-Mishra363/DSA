@@ -9,7 +9,16 @@ public:
         return dp[currentStair] = jump_one + jump_two;
     }
     int climbStairs(int n) {
-        vector<int>dp(n+1,-1);
-        return climbStairsHelper(0 , n , dp);
+        vector<int>dp(2,0);
+        dp[0]=1;
+        // return climbStairsHelper(0 , n , dp);
+        for(int currentStair=n-1 ; currentStair>=0 ; currentStair--){
+            int jump_one=dp[0];
+            int jump_two=dp[1];
+            int tmp=jump_one+jump_two;
+            dp[1]=dp[0];
+            dp[0] = tmp;
+        }
+        return dp[0];
     }
 };
