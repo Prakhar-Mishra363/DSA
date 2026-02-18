@@ -8,15 +8,6 @@ public:
         return dp[start-help] = max(pick , dnp);
     }
     long long rob(vector<int>& nums, vector<int>& colors) {
-        //we encounter the most difficulty when the colors are same (surprising i know)
-        //so we simply calculate how many houses with same color are there then alternatively prepare two sum 
-        //for example if test case is
-        /*
-        nums=[1,6,4,9]
-        colors=[1,1,1,2]
-        same color houses occur from 0 to 2
-        so we can rob either house 0 and 2 or only 1 and in this case robbing 1 is better
-        */
         if(nums.size()==1)return nums[0];
         long long result=0;
         int idx=0,n=nums.size();
@@ -26,11 +17,17 @@ public:
                 idx += 1;
                 end=idx;
             }
-            //now we compute two sums
             if(end>start){
-                vector<long long> dp(end-start+1 , -1);
+                int help=start;
+                vector<long long> dp(2 , 0);
                 idx += 1;
-                result += max_one(start , start , end , nums,dp);
+                for(int idx1=end ; idx1>=start ; idx1--){
+                    long long pick = nums[idx1] + dp[1];
+                    long long dnp = dp[0];
+                    dp[1]=dp[0];
+                    dp[0] = max(pick , dnp);
+                }
+                result += dp[0];
             }
             while(idx<n-1 && colors[idx] != colors[idx+1]){
                 result += nums[idx];
