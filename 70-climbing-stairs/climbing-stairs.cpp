@@ -1,30 +1,15 @@
 class Solution {
 public:
-    // long long fact(int n){
-    //     if(n <= 1)return 1;
-    //     // int nMinus1 = 1;
-    //     long long result = 1;
-    //     for(int i=2;i<=n;i++){
-    //         result = result * i;
-    //     }
-    //     return result;
-    // }
-    // int climbStairsHelper(int n,vector<int> &dp){
-    //     if(dp[n] != -1)return dp[n];
-    //     return dp[n] = climbStairsHelper(n-1,dp) + climbStairsHelper(n-2,dp);
-    // }
+    int climbStairsHelper(int currentStair , int destStair , vector<int> &dp){
+        if(currentStair == destStair)return 1;
+        if(currentStair > destStair)return 0;
+        if(dp[currentStair] != -1)return dp[currentStair];
+        int jump_one=climbStairsHelper(currentStair+1 , destStair , dp);
+        int jump_two=climbStairsHelper(currentStair+2 , destStair , dp);
+        return dp[currentStair] = jump_one + jump_two;
+    }
     int climbStairs(int n) {
-        if(n <= 2){
-            return n;
-        }
-        int nMinus1 = 2;
-        int nMinus2 = 1;
-        int distinctWaysToClimb = 0;
-        for(int i=3;i<=n;i++){
-            distinctWaysToClimb = nMinus1 + nMinus2;
-            nMinus2 = nMinus1;
-            nMinus1 = distinctWaysToClimb;
-        }
-        return distinctWaysToClimb;
+        vector<int>dp(n+1,-1);
+        return climbStairsHelper(0 , n , dp);
     }
 };
