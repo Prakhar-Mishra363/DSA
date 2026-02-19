@@ -13,10 +13,19 @@ public:
     }
     int countBinarySubstrings(string s) {
         int total_subs=0;
-        for(int idx=0 ; idx<s.size()-1 ; idx++){
-            if(s[idx]==s[idx+1])continue;
-            total_subs += helper(idx , idx+1 , s);
+        int curr , prev=0;
+        int n=s.size();
+        if(n==1)return 0;
+        for(int idx=0 ; idx<n-1 ; idx++){
+            curr=1;
+            while(idx<n-1 && s[idx]==s[idx+1]){
+                curr++;
+                idx += 1;
+            }
+            total_subs += min(curr,prev);
+            prev=curr;
         }
+        if(s[n-1]!=s[n-2])total_subs++;
         return total_subs;
     }
 };
