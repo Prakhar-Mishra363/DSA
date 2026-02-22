@@ -1,26 +1,17 @@
 class Solution {
 public:
     string maximumXor(string s, string t) {
-        int ones=0;
-        string result="";
-        for(int idx=0 ; idx<t.size() ; idx++){
-            if(t[idx]=='1')ones++;
-        }
+        int ones=count(t.begin(),t.end(),'1');
         int zeroes=t.size()-ones;
-        cout<<ones<<" "<<zeroes;
+        string result;
+        result.reserve(s.size());
         for(int idx=0 ; idx<s.size() ; idx++){
-            if(s[idx]=='1' ){
-                if(zeroes>0){
-                    result += "1"; zeroes--;
-                }else{
-                    result += '0'; ones--;
-                }
+            if(s[idx]=='1' && zeroes || s[idx]=='0' && ones){
+                result += '1';
+                (s[idx]=='1') ? zeroes-- : ones--;
             }else{
-                if(ones>0){
-                    result += "1";ones--;
-                }else{
-                    result += '0'; zeroes--;
-                }
+                result += '0';
+                (s[idx] == '1') ? ones-- : zeroes--;
             }
         }
         return result;
