@@ -28,6 +28,8 @@ public:
         return leftSum+rightSum;
     }
     int sumRootToLeaf(TreeNode* root) {
-        return helper(root , "");
+        string s;
+        s.reserve(31);
+        return helper(root , s);
     }
 };
