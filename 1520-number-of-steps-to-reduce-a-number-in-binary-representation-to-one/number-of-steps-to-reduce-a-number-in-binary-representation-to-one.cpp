@@ -25,22 +25,22 @@ public:
     }
     int numSteps(string s) {
         int n=s.size() , cal_steps=0;
-        vector<bool>isCarry(s.size() , false);
+        bool isCarry=false;
 
         // return helper(0 , s , isCarry);
         if(s[n-1]=='1' && (n-1)>0){
             cal_steps += 2;
-            isCarry[n-1]=true;
+            isCarry=true;
         }else cal_steps += ((n-1)>0) ? 1 : 0;
         for(int idx=n-2 ; idx>=0 ; idx--){
-            if(!isCarry[idx+1] && idx==0)continue;
-            if(isCarry[idx+1]){
+            if(!isCarry && idx==0)continue;
+            if(isCarry){
                 if(s[idx]=='1') cal_steps += 1;
                 else cal_steps += 2;
-                isCarry[idx]=true;
+                isCarry=true;
             }else{
                 if(s[idx]=='1' && idx>0){
-                    isCarry[idx]=true;
+                    isCarry=true;
                     cal_steps += 2;
                 }else{
                     cal_steps += 1;
