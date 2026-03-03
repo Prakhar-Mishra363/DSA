@@ -1,16 +1,12 @@
 class Solution {
 public:
     int singleNumber(vector<int>& nums) {
-        unordered_map<int , int>um;//number , freq
-        int num=0;
-        for(int idx=0; idx<nums.size() ; idx++){
-            if(um.find(nums[idx]) == um.end() || um[nums[idx]]==1){
-                um[nums[idx]]++;
-            }
+        int ones=0 , twos=0;
+        for(int idx=0 ; idx<nums.size() ; idx++){
+            int tmp=(ones^nums[idx])&(~twos);
+            ones=tmp;
+            twos=(twos^nums[idx])&(~ones);
         }
-        for(auto a:um){
-            if(a.second==1)num=a.first;
-        }
-        return num;
+        return ones;
     }
 };
