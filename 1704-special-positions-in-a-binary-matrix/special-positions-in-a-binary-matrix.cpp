@@ -27,10 +27,11 @@ public:
                 if(mat[row][col]){
                     if(!is_one[row][col] && is_special(row , col , 1 , mat , is_one)){
                         total_special_pos += 1;
+                        is_one[row][col]=true;
+                        break;
                     }else{
                         is_special(row , col , 1 , mat , is_one);
                     }
-                    is_one[row][col]=true;
                 }
             }
         }
