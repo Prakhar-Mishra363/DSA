@@ -1,9 +1,9 @@
 class Solution {
 public:
     int minFlips(int a, int b, int c) {
-        int place=0 , minimum_flips_req=0;
+        int place=0 , minimum_flips_req=0 , comp_num = max(a , max(b , c));
         int curr_bit = 1<<place;
-        while((curr_bit <= c) || (curr_bit <= a) || (curr_bit <= b)){
+        while(curr_bit <= comp_num){
             if((curr_bit & c)){
                 if(!(curr_bit & a) && !(curr_bit & b))minimum_flips_req++;
             }else{
