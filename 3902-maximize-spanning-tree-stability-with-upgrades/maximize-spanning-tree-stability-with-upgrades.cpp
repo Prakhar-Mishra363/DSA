@@ -1,9 +1,11 @@
 class DSU{
     public: 
         vector<int>parent;
+        //for keeping the track of components in the tree
         int total_comp;
         DSU(int n){
             parent.resize(n , -1);
+            //initially every node is alone so n components
             total_comp=n;
         }
         int find_parent(int u){
@@ -17,6 +19,7 @@ class DSU{
             if(parent[par_u]>parent[par_v])swap(par_u , par_v);
             parent[par_u] += parent[par_v];
             parent[par_v]=par_u;
+            //every time if a union is done reduce the count of components
             total_comp--;
             return false;
         }
@@ -30,14 +33,14 @@ public:
         vector<vector<int>>non_must_edges;
         DSU d(n);
         int ans=INT_MAX;
-        vector<int>nmas;
-        int max_poss_stab=INT_MAX;
+        vector<int>nmas; //nams => optional edges that are added in the tree their strengths
         //O(1e5)
         for(int idx=0 ; idx<edges.size() ; idx++){
             auto &curr_edge=edges[idx];
             if(curr_edge[3]){
                 if(d.union_by_size(curr_edge[0] , curr_edge[1]))return -1;
-                else{  
+                else{ 
+                    //updating the stability 
                     ans=min(ans , curr_edge[2]);
                 }
             }else{
