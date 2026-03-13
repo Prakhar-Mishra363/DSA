@@ -1,3 +1,15 @@
+/*
+    For every answer we need to check the number of heights current worker will decrease
+    height_decreased_by_curr_worker = n
+    secs required to decrease the height to 0=total_time
+    curr_worker's time=t
+    n * (n + 1)/2 * t  >= total_time
+    n*(n+1) >= 2*total_time/t
+    n^2 + n +1/4 -1/4 >= 2*total_time/t
+    (n+1/2)^2 >= 2*total_time/t +0.25
+    n+0.5 >= sqrt( 2*total_time/t +0.25 )
+    n >= sqrt( 2*total_time/t +0.25 ) - 0.5
+*/
 class Solution {
 public:
     bool is_possible(int height , long long secs , vector<int> &arr){
